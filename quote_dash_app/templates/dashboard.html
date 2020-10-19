@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- load Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>{{user.first_name}}'s Dashboard</title>
+</head>
+
+<body>
+    <div class="d-flex justify-content-between p-5">
+        <h1 class="text-center">Welcome {{user.first_name}} {{user.last_name}}</h1>
+        <a href="/edit_user" class="btn btn-primary">Edit My Account</a>
+        <a href="/show_user/{{user.id}}" class="btn btn-primary">Quotes</a>
+        <a href="/logout" class="btn btn-danger">Log Out</a>
+    </div>
+    <div class="d-flex justify-content-around">
+        <div class="col-6 d-flex flex-column justify-content-around align-items-center">
+            {% for quote in all_quotes %}
+                <div class="card col-5">
+                <h4 class="card-title" style="background-color: {{quote.color}}">{{quote.author}}</h4>
+                    <p class="card-text">Quote: {{quote.quote}}</p>
+                    
+                    <p>Posted By: <a href="/show_user/{{quote.user.id}}">{{quote.user.first_name}} {{quote.user.last_name}}</a></p>
+                    
+                    <p class="card-text">Likes : {{quote.likes.count}}</p>
+                   
+                    <a href="/like/{{quote.id}}/{{user.id}}" class="btn btn-success">Like Me</a>
+
+                    {% if quote.user.id == user.id %}
+                    <a href="/delete_quote/{{quote.id}}" class="btn btn-danger btn-outline-warning">Delete Me</a>
+                    {% endif %}
+                   
+                   
+                </div>
+            {% endfor %}
+        </div>
+            <form action="/create_quote" method="post" class="col=6 bg-light p-3">
+                <h2 class="text-center">Add A Quote</h2>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" name="author" class="text form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'author error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="quote">Quote:</label>
+                    <input type="text" name="quote"  class="text form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'size error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+        <input type="submit" value="Add Quote" class="btn btn-warning btn-outline-dark">
+        </form>
+    </div>
+    <style>
+        .btn{
+            border: 2px solid black;
+            border-radius: 10px;
+            margin: 10px;
+        }
+    </style>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" async></script>
+
+</body>
+
+</html>

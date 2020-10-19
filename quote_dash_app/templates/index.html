@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="d-flex justify-content-around">
+        <div class="col-4 my-5">
+            <form action='/addUser' method='post'>
+                <h2 class="text-center">Register</h2>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type='text' name='first_name' class="form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'first_name error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type='text' name='last_name' class="form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'last_name error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type='text' name='email' class="form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'email error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type='password' name='password' class="form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'password error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="confirm">Confirm Password:</label>
+                    <input type='password' name='confirm' class="form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'confirm error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <input type='submit' value='Register'>
+            </form>
+        </div>
+        <div class="login">
+
+            <form action='/login' method='post'>
+                <h2 class="text-center">Login</h2>
+                {% csrf_token %}<br>
+                <div class="form-group">
+                    <label for="login_email">Email:</label>
+                    <input type='text' name='login_email' class="form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'login error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="login_pw">Password:</label>
+                    <input type='password' name='login_pw' class="form-control">
+                    <span class="text-danger">
+                        {% for message in messages %}
+                            {% if message.tags == 'login error' %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <input type='submit' value='Log In'>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
